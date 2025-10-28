@@ -15,7 +15,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/Aseemakram19/starbucks-kubernetes.git'
+                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/puneetdeshiya/starbucks-docker-k8s.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -48,20 +48,20 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build -t starbucks ."
-                       sh "docker tag starbucks aseemakram19/starbucks:latest "
-                       sh "docker push aseemakram19/starbucks:latest "
+                       sh "docker tag starbucks puneetdeshiya1/starbucks:latest"
+                       sh "docker push puneetdeshiya1/starbucks:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image aseemakram19/starbucks:latest > trivyimage.txt" 
+                sh "trivy image puneetdeshiya1/starbucks:latest > trivyimage.txt" 
             }
         }
         stage('App Deploy to Docker container'){
             steps{
-                sh 'docker run -d --name starbucks -p 3000:3000 aseemakram19/starbucks:latest'
+                sh 'docker run -d --name starbucks -p 3000:3000 puneetdeshiya1/starbucks:latest'
             }
         }
 
