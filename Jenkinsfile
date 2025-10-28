@@ -20,7 +20,7 @@ pipeline{
         }
         stage("Sonarqube Analysis "){
             steps{
-                withSonarQubeEnv('Sonar-token') {
+                withSonarQubeEnv('SonarQube') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=starbucks \
                     -Dsonar.projectKey=starbucks '''
                 }
